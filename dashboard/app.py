@@ -23,12 +23,12 @@ page = st.sidebar.radio(
 
 if page == "💲 Rent Prediction":
     st.empty()
-    exec(open("dashboard/rental.py").read())
+    exec(open("urbanrent/dashboard/rental.py").read())
 
 if page == "📊 Interactive Graphs":
     st.empty()
-    exec(open("dashboard/dashboard.py").read())
+    exec(open("urbanrent/dashboard/dashboard.py").read())
 
 if page == "📈 Map Visualisation":
     st.empty()
-    exec(open("dashboard/visual.py").read())
+    exec(open("urbanrent/dashboard/visual.py").read())
