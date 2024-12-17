@@ -5,9 +5,14 @@ import joblib
 import numpy as np
 import matplotlib.pyplot as plt
 from warnings import filterwarnings
+import os
+print(os.getcwd())  # Prints the current working directory
+best_model_path = os.path.join(os.getcwd(), 'model', 'best_model_pipeline.pkl')
+print(best_model_path)  # Print the full model path
+best_model_pipeline = joblib.load(best_model_path)
 
 # Load the best model
-best_model_pipeline = joblib.load(f"{getcwd()}/model/best_model_pipeline.pkl")
+#best_model_pipeline = joblib.load(f"{getcwd()}/model/best_model_pipeline.pkl")
 linear_model_pipeline = joblib.load(f'{getcwd()}/model/linear_regression_pipeline.pkl')
 #random_forest_pipeline = joblib.load('/content/drive/MyDrive/FYP B IZZA/random_forest_pipeline.pkl')
 gradient_boosting_pipeline = joblib.load(f'{getcwd()}model/gradient_boosting_pipeline.pkl')
