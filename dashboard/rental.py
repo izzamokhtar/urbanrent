@@ -9,12 +9,12 @@ from warnings import filterwarnings
 
 # Load the best model
 best_model_pipeline = joblib.load("model/best_model_pipeline.pkl")
-linear_model_pipeline = joblib.load('/content/drive/MyDrive/FYP B IZZA/linear_regression_pipeline.pkl')
+linear_model_pipeline = joblib.load('model/linear_regression_pipeline.pkl')
 #random_forest_pipeline = joblib.load('/content/drive/MyDrive/FYP B IZZA/random_forest_pipeline.pkl')
-gradient_boosting_pipeline = joblib.load('/content/drive/MyDrive/FYP B IZZA/gradient_boosting_pipeline.pkl')
+gradient_boosting_pipeline = joblib.load('model/gradient_boosting_pipeline.pkl')
 
 # Load the best model's name
-with open("/content/drive/MyDrive/FYP B IZZA/best_model_name.txt", "r") as f:
+with open("model/best_model_name.txt", "r") as f:
     best_model_name = f.read()
 
 # Extract categories for user input from the best model's preprocessor
