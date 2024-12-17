@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from warnings import filterwarnings
 
 # Load the best model
-best_model_pipeline = joblib.load("/content/drive/MyDrive/FYP B IZZA/best_model_pipeline.pkl")
+best_model_pipeline = joblib.load("model/best_model_pipeline.pkl")
 linear_model_pipeline = joblib.load('/content/drive/MyDrive/FYP B IZZA/linear_regression_pipeline.pkl')
 #random_forest_pipeline = joblib.load('/content/drive/MyDrive/FYP B IZZA/random_forest_pipeline.pkl')
 gradient_boosting_pipeline = joblib.load('/content/drive/MyDrive/FYP B IZZA/gradient_boosting_pipeline.pkl')
