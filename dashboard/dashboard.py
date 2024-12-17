@@ -12,7 +12,7 @@ st.title("Rent Pricing at Kuala Lumpur and Selangor")
 # Load the dataset
 @st.cache_data
 def load_data():
-    df = pd.read_csv('/content/drive/MyDrive/FYP B IZZA/mudah-apartment-kl-selangor_cleaned.csv')
+    df = pd.read_csv('dataset/mudah-apartment-kl-selangor_cleaned.csv')
     df.columns = df.columns.str.strip().str.lower()
     df['monthly_rent'] = df['monthly_rent'].str.replace('RM', '').str.replace('per month', '').str.replace(' ', '')
     df['monthly_rent'] = pd.to_numeric(df['monthly_rent'], errors='coerce')
@@ -24,7 +24,7 @@ df = load_data()
 # Load the trained model pipeline
 @st.cache_resource
 def load_model():
-    model = joblib.load('/content/drive/MyDrive/FYP B IZZA/best_model_pipeline.pkl')  # Your trained model
+    model = joblib.load('model/best_model_pipeline.pkl')  # Your trained model
     return model
 
 model = load_model()
