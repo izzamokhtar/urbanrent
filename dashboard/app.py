@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 import numpy as np
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from warnings import filterwarnings
 
 st.set_page_config(page_title="Rent Price Prediction", page_icon=":heavy_dollar_sign:")
