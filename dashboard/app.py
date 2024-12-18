@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from warnings import filterwarnings
 
 st.set_page_config(page_title="Rent Price Prediction", page_icon=":heavy_dollar_sign:")
@@ -23,12 +23,12 @@ page = st.sidebar.radio(
 
 if page == "💲 Rent Prediction":
     st.empty()
-    exec(open("urbanrent/dashboard/rental.py").read())
+    exec(open("dashboard/rental.py").read())
 
 if page == "📊 Interactive Graphs":
     st.empty()
-    exec(open("urbanrent/dashboard/dashboard.py").read())
+    exec(open("dashboard/dashboard.py").read())
 
 if page == "📈 Map Visualisation":
     st.empty()
-    exec(open("urbanrent/dashboard/visual.py").read())
+    exec(open("dashboard/visual.py").read())
