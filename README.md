@@ -1,2 +1,2 @@
 # Urbanrent
-FYP Project Izza Syahirah Mokhtar
+Final Year Project Izza Syahirah Mokhtar
