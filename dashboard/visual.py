@@ -1,14 +1,20 @@
+# visual.py
 import streamlit as st
 import pandas as pd
-import folium
+import folium  # type: ignore
 from geopy.geocoders import Nominatim
-from folium.plugins import MarkerCluster
+from geopy.exc import GeocoderTimedOut
+from folium.plugins import MarkerCluster  # type: ignore
+import joblib
+import time
+
+st.title("Map Visualisation")
 
 # Load your dataset
 @st.cache_data
 def load_data():
     # Replace with your actual dataset path
-    df = pd.read_csv('/content/drive/MyDrive/FYP B IZZA/mudah-apartment-kl-selangor_cleaned.csv')
+    df = pd.read_csv('/workspaces/urbanrent/dataset/mudah-apartment-kl-selangor_cleaned.csv')
 
     # Clean dataset columns (normalize column names)
     df.columns = df.columns.str.strip().str.lower()
@@ -27,16 +33,50 @@ def load_data():
 
     return df
 
+
 df = load_data()
 
-# Geocoding function with user-agent
+# Geocode and cache locations
+@st.cache_data
+def geocode_all_locations(locations):
+    geolocator = Nominatim(user_agent="my_rent_dashboard (213061@student.upm.edu.my)", timeout=10)
+    geocoded_data = {}
+    
+    for location_name in locations:
+        for attempt in range(3):  # Retry up to 3 times
+            try:
+                location = geolocator.geocode(location_name)
+                if location:
+                    geocoded_data[location_name] = (location.latitude, location.longitude)
+                    break
+            except GeocoderTimedOut:
+                time.sleep(2)  # Wait before retrying
+        else:
+            geocoded_data[location_name] = (None, None)
+    return geocoded_data
+
+# Cache the geocoded data to a file
+@st.cache_data
+def cache_geocoded_data():
+    locations = df['location'].unique()
+    geocoded_data = geocode_all_locations(locations)
+    joblib.dump(geocoded_data, "geocoded_data.pkl")
+    return geocoded_data
+
+# Load cached geocoded data
+@st.cache_data
+def load_cached_data():
+    try:
+        return joblib.load("geocoded_data.pkl")
+    except FileNotFoundError:
+        return cache_geocoded_data()
+
+geocoded_data = load_cached_data()
+
+# Geocoding function to retrieve latitude and longitude
 def geocode_location(location_name):
-    geolocator = Nominatim(user_agent="my_rent_dashboard (213061@student.upm.edu.my)")  # Change this to your app name and contact
-    location = geolocator.geocode(location_name)
-    if location:
-        return location.latitude, location.longitude
-    else:
-        return None, None
+    return geocoded_data.get(location_name, (None, None))
+
 
 # Sidebar for user input
 st.sidebar.title('Interactive Map for Locations')
@@ -80,4 +120,5 @@ else:
 
     # Display the map
     st.write("### Property Locations Map")
+    from streamlit_folium import folium_static  # Lazy import for folium in Streamlit
     folium_static(m)
