@@ -14,7 +14,7 @@ st.title("Map Visualisation")
 @st.cache_data
 def load_data():
     # Replace with your actual dataset path
-    df = pd.read_csv('/workspaces/urbanrent/dataset/mudah-apartment-kl-selangor_cleaned.csv')
+    df = pd.read_csv('dataset/mudah-apartment-kl-selangor_cleaned.csv')
 
     # Clean dataset columns (normalize column names)
     df.columns = df.columns.str.strip().str.lower()
