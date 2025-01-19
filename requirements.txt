@@ -8,3 +8,4 @@ geopy
 folium
 streamlit-folium
 seaborn
+python==3.11.11
