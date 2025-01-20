@@ -31,9 +31,6 @@ rooms = st.number_input("Number of Rooms", value=2)
 bathrooms = st.number_input("Number of Bathrooms", value=1)
 parking = st.number_input("Number of Parking Spaces", value=1)
 
-# Rental duration with the selected options
-#rental_duration = st.selectbox("Rental Duration (Months)", [12, 24, 36])
-
 # Combine user inputs into a DataFrame
 user_input = pd.DataFrame({
     'location': [location],
@@ -43,36 +40,12 @@ user_input = pd.DataFrame({
     'parking': [parking]
 })
 
-# Function to adjust rental price based on duration
-"""def get_price_adjustment_based_on_duration(base_price, duration):
-    
-    #if duration < 12:
-        #adjusted_price = base_price * (1 + 0.10 * (12 - duration))  # Increase price for shorter durations
-    if duration > 17:
-        adjusted_price = base_price * (1 - 0.05)  # Decrease price for longer durations
-    else:
-        adjusted_price = base_price  # No adjustment for 12-month duration
-    return adjusted_price
-"""
-
 # Predict with the best model
 if st.button("Predict"):
     prediction = best_model_pipeline.predict(user_input)[0]
     linear_prediction = linear_model_pipeline.predict(user_input)[0]
     gradient_boosting_prediction = gradient_boosting_pipeline.predict(user_input)[0]
 
-    """# Adjust price based on rental duration
-    adjusted_prediction = get_price_adjustment_based_on_duration(prediction, rental_duration)
-    adjusted_linear_prediction = get_price_adjustment_based_on_duration(linear_prediction, rental_duration)
-    adjusted_gradient_boosting_prediction = get_price_adjustment_based_on_duration(gradient_boosting_prediction, rental_duration)
-    """
-    
     # Display predictions
     st.write(f"Predicted Rent using {best_model_name}: RM{prediction:.2f}")
-    #st.write(f"Predicted Rent using Linear Regression: RM{linear_prediction:.2f}")
-    #st.write(f"Predicted Rent using Gradient Boosting: RM{gradient_boosting_prediction:.2f}")
-
-    #if (rental_duration > 17):
-        #st.write(f"Adjusted Rent for {rental_duration} months: RM{adjusted_prediction:.2f}")
-    #st.write(f"Adjusted Rent using Linear Regression for {rental_duration} months: RM{adjusted_linear_prediction:.2f}")
-    #st.write(f"Adjusted Rent using Gradient Boosting for {rental_duration} months: RM{adjusted_gradient_boosting_prediction:.2f}")
+    
