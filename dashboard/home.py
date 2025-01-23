@@ -130,18 +130,3 @@ fig_bubble = px.scatter(
     color_discrete_sequence=px.colors.qualitative.Set3
 )
 st.plotly_chart(fig_bubble)
-
-
-# Size vs Rent Relationship using Plotly
-st.header("Size vs Rent")
-fig = px.scatter(
-    filtered_data, 
-    x="size", 
-    y="monthly_rent", 
-    title="Size vs Monthly Rent", 
-    color='property_type', 
-    hover_data=['region', 'property_type'],
-    color_discrete_sequence=px.colors.qualitative.Set1,
-    labels={"size": "Size", "monthly_rent": "Average Monthly Rent (RM)", "region": "Region", "property_type": "Property Type"}
-)
-st.plotly_chart(fig)
