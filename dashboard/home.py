@@ -8,7 +8,12 @@ def load_data():
     data.columns = data.columns.str.strip().str.lower()
     data['monthly_rent'] = data['monthly_rent'].str.replace('RM', '').str.replace('per month', '').str.replace(' ', '')
     data['monthly_rent'] = pd.to_numeric(data['monthly_rent'], errors='coerce')
-    data = data.dropna(subset=['monthly_rent'])
+
+     # Clean and convert 'size' to numeric
+    data['size'] = data['size'].str.replace('sq.ft.', '').str.strip()
+    data['size'] = pd.to_numeric(data['size'], errors='coerce')
+
+    data = data.dropna(subset=['monthly_rent', 'size'])
     return data
 
 data = load_data()
@@ -105,6 +110,28 @@ fig = px.bar(
 )
 st.plotly_chart(fig)
 
+# Filter data for size and monthly rent constraints
+filtered_data_size_rent = filtered_data[
+    (filtered_data['size'] < 3000) & 
+    (filtered_data['monthly_rent'] < 10000)
+]
+
+# Bubble Chart
+st.header("Size vs Monthly Rent by Property Type")
+fig_bubble = px.scatter(
+    filtered_data_size_rent,
+    x="size",
+    y="monthly_rent",
+    size="size",
+    color="property_type",
+    hover_data=["region", "property_type"],
+    title="Size vs Monthly Rent by Property Type",
+    labels={"size": "Size (sq.ft.)", "monthly_rent": "Monthly Rent (RM)", "property_type": "Property Type"},
+    color_discrete_sequence=px.colors.qualitative.Set3
+)
+st.plotly_chart(fig_bubble)
+
+
 # Size vs Rent Relationship using Plotly
 st.header("Size vs Rent")
 fig = px.scatter(
@@ -118,7 +145,3 @@ fig = px.scatter(
     labels={"size": "Size", "monthly_rent": "Average Monthly Rent (RM)", "region": "Region", "property_type": "Property Type"}
 )
 st.plotly_chart(fig)
-
-# Display Filtered Data (Optional)
-#st.header("Filtered Data")
-#st.dataframe(filtered_data)
